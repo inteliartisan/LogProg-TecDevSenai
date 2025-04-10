@@ -1,5 +1,5 @@
 
-# Atividade:
+# Atividade 01:
 
 # 1 - Implementar uma repetição que solicite as informações do usuário até que seja informado a opção "c".
 # 2 - A cada repetição, apresentar o menu com as seguintes opções:
@@ -52,11 +52,11 @@ class Usuarios:
 # Função para cadastrar usuário já com os tratamentos devidos.
     def cadastrarUsuarios(self):
         nome = input('\nDigite o nome do usuário: ')
-        idade = input('\nDigite a idade do usuário: ')
+        idade = input('Digite a idade do usuário: ')
         try:
             pessoa = Pessoa(nome, idade)
             self.__listaUsuarios.append(pessoa)
-            print('\nUsuário cadastrado com sucesso')
+            print('\nUsuário cadastrado com sucesso!')
             self.__salvarUsuarios()
         except ValueError as e:
             print(f'Erro ao cadastrar: {e}')
@@ -85,17 +85,17 @@ class Usuarios:
 # Execução do código
     def executar(self):
         while True:
-            print('''\n Menu:\n
-          1. Para cadastrar usuário
-          2. Para listar os usuários
-          3. Para sair do sistema''')
+            print('''\nMenu:\n
+1. Para cadastrar usuário
+2. Para listar os usuários
+3. Para sair do sistema''')
             
-            opcao = input('\nDigite a opção desejada: ')
-            if opcao == '1':
+            user = input('\nDigite a opção desejada: ')
+            if user == '1':
                 self.cadastrarUsuarios()
-            elif opcao == '2':
+            elif user == '2':
                 self.listarUsuarios()
-            elif opcao == '3':
+            elif user == '3':
                 break
             else:
                 print('\nOpção Inválida')
