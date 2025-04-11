@@ -93,13 +93,13 @@ class Usuarios:
 # Execução do looping.
     def executar(self):
         while True:
-            print('''\nMenu:\n
+            print('''
+\nMenu:\n
 1. Para cadastrar usuário
 2. Para listar os usuários
 3. Para buscar um usuário pelo nome
 4. Para sair do sistema
-''')
-            
+                  ''')
             user = input('\nDigite a opção desejada: ')
             if user == '1':
                 self.cadastrarUsuarios()

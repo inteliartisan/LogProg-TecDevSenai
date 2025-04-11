@@ -1,15 +1,7 @@
+# Atividade 04
 
-# Atividade 01:
+# Implementar uma função que remova um usuário da estrutura homogênea pelo nome da pessoa. 
 
-# 1 - Implementar uma repetição que solicite as informações do usuário até que seja informado a opção "c".
-# 2 - A cada repetição, apresentar o menu com as seguintes opções:
-# a) Cadastrar novo usuário: Nome e Idade
-# b) Listar todos os usuários cadastrados
-# c) Sair do sistema
-
-# Melhorias:
-
-# O código importa a biblioteca "json" e "os" para possibilitar a emissão de relatório.
 import json
 import os
 
@@ -49,17 +41,21 @@ class Usuarios:
         self.__listaUsuarios = []
         self.__carregarUsuarios()
 
-# Função para cadastrar usuário já com os tratamentos devidos.
+# Função para cadastrar usuário já com os tratamentos devidos e a melhoria da atividade de haver uma limitação no número de usuários cadastrados. 
     def cadastrarUsuarios(self):
-        nome = input('\nDigite o nome do usuário: ')
-        idade = input('Digite a idade do usuário: ')
-        try:
-            pessoa = Pessoa(nome, idade)
-            self.__listaUsuarios.append(pessoa)
-            print('\nUsuário cadastrado com sucesso!')
-            self.__salvarUsuarios()
-        except ValueError as e:
-            print(f'Erro ao cadastrar: {e}')
+        maxUsuarios = 3
+        if len(self.__listaUsuarios) < maxUsuarios:
+            nome = input('\nDigite o nome do usuário: ')
+            idade = input('Digite a idade do usuário: ')
+            try:
+                pessoa = Pessoa(nome, idade)
+                self.__listaUsuarios.append(pessoa)
+                print('\nUsuário cadastrado com sucesso!')
+                self.__salvarUsuarios()
+            except ValueError as e:
+                print(f'Erro ao cadastrar: {e}')
+        else:
+            print(f'Limite máximo de usuários atingido: {maxUsuarios}.')
 
 # Função para listar usuários.
     def listarUsuarios(self):
@@ -69,7 +65,30 @@ class Usuarios:
             print('\nOs usuários cadastrados são:\n')
             for i in self.__listaUsuarios:
                 print(i)
+    
+# Função para buscar um usuário pelo nome evidenciando a posição, o nome e a idade e caso não encontrado, emitindo a mensagem "usuário não registrado".
+    def buscarUsuarios(self):
+        usuario = False
+        buscaUsuario = input('\nDigite o nome do usuário que deseja buscar: ')
+        for i, pessoa in enumerate(self.__listaUsuarios):
+            if pessoa.nome == buscaUsuario:
+                print(f'Posição: {1 + i}, Nome: {pessoa.nome}, Idade: {pessoa.idade}')
+            usuario = True
+            if not usuario:
+                print('\nUsuário não registrado')
 
+# Função para remover um usuário pelo nome da pessoa da estrutura homogênea.
+    def removerUsuario(self):
+        removeUsuario = input('\nInforme o nome do usuário que deseja remover: ')
+        for i, pessoa in enumerate(self.__listaUsuarios):
+            if pessoa.nome == removeUsuario:
+                self.__listaUsuarios.pop(i)
+                print(f'{removeUsuario} foi removido com sucesso!')
+                self.__salvarUsuarios() #atualiza o arquivo "json".
+                break
+            else:
+                print(f'Usuário não encontrado.')
+                
 # Função para salvar usuários no formato "json".
     def __salvarUsuarios(self):
         with open('usuarios.json', 'w', encoding='utf-8') as arquivo:
@@ -82,15 +101,16 @@ class Usuarios:
                 dados = json.load(arquivo)
                 self.__listaUsuarios = [Pessoa.from_dict(p) for p in dados]
 
-# Execução do código
+# Execução do looping.
     def executar(self):
         while True:
             print('''
-\nMenu:\n
+Menu:\n
 1. Para cadastrar usuário
 2. Para listar os usuários
 3. Para buscar um usuário pelo nome
-4. Para sair do sistema
+4. Para remover um usuário pelo nome
+5. Para sair do sistema
                   ''')
             user = input('\nDigite a opção desejada: ')
             if user == '1':
@@ -100,6 +120,8 @@ class Usuarios:
             elif user == '3':
                 self.buscarUsuarios()
             elif user == '4':
+                self.removerUsuario()
+            elif user == '5':
                 break
             else:
                 print('\nOpção Inválida')
@@ -107,40 +129,3 @@ class Usuarios:
 if __name__ == "__main__":
     app = Usuarios()
     app.executar()
-
-
-
-
-
-
-
-
-
-        
-            
-
-
-    
-
-
-
-
-
-
-
-
-
-          
-          
-          
-          
-          
-          
-
-
-
-
-
-    
-
-
