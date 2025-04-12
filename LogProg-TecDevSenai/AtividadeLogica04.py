@@ -1,6 +1,6 @@
 # Atividade 04
 
-# Implementar uma função que remova um usuário da estrutura homogênea pelo nome da pessoa. 
+# 1 - Implementar uma função que remova um usuário da estrutura homogênea pelo nome da pessoa. 
 
 import json
 import os
@@ -38,39 +38,39 @@ class Pessoa:
     
 class Usuarios: 
     def __init__(self):
-        self.__listaUsuarios = []
-        self.__carregarUsuarios()
+        self.__lista_usuarios = []
+        self.__carregar_usuarios()
 
 # Função para cadastrar usuário já com os tratamentos devidos e a melhoria da atividade de haver uma limitação no número de usuários cadastrados. 
-    def cadastrarUsuarios(self):
+    def cadastrar_usuarios(self):
         maxUsuarios = 3
-        if len(self.__listaUsuarios) < maxUsuarios:
+        if len(self.__lista_usuarios) < maxUsuarios:
             nome = input('\nDigite o nome do usuário: ')
             idade = input('Digite a idade do usuário: ')
             try:
                 pessoa = Pessoa(nome, idade)
-                self.__listaUsuarios.append(pessoa)
+                self.__lista_usuarios.append(pessoa)
                 print('\nUsuário cadastrado com sucesso!')
-                self.__salvarUsuarios()
+                self.__salvar_usuarios()
             except ValueError as e:
                 print(f'Erro ao cadastrar: {e}')
         else:
             print(f'Limite máximo de usuários atingido: {maxUsuarios}.')
 
 # Função para listar usuários.
-    def listarUsuarios(self):
-        if not self.__listaUsuarios:
+    def listar_usuarios(self):
+        if not self.__lista_usuarios:
             print(f'\nNão há usuários cadastrados')
         else:
             print('\nOs usuários cadastrados são:\n')
-            for i in self.__listaUsuarios:
+            for i in self.__lista_usuarios:
                 print(i)
     
 # Função para buscar um usuário pelo nome evidenciando a posição, o nome e a idade e caso não encontrado, emitindo a mensagem "usuário não registrado".
-    def buscarUsuarios(self):
+    def buscar_usuarios(self):
         usuario = False
         buscaUsuario = input('\nDigite o nome do usuário que deseja buscar: ')
-        for i, pessoa in enumerate(self.__listaUsuarios):
+        for i, pessoa in enumerate(self.__lista_usuarios):
             if pessoa.nome == buscaUsuario:
                 print(f'Posição: {1 + i}, Nome: {pessoa.nome}, Idade: {pessoa.idade}')
             usuario = True
@@ -78,28 +78,28 @@ class Usuarios:
                 print('\nUsuário não registrado')
 
 # Função para remover um usuário pelo nome da pessoa da estrutura homogênea.
-    def removerUsuario(self):
+    def remover_usuario(self):
         removeUsuario = input('\nInforme o nome do usuário que deseja remover: ')
-        for i, pessoa in enumerate(self.__listaUsuarios):
+        for i, pessoa in enumerate(self.__lista_usuarios):
             if pessoa.nome == removeUsuario:
-                self.__listaUsuarios.pop(i)
+                self.__lista_usuarios.pop(i)
                 print(f'{removeUsuario} foi removido com sucesso!')
-                self.__salvarUsuarios() #atualiza o arquivo "json".
+                self.__salvar_usuarios() #atualiza o arquivo "json".
                 break
             else:
                 print(f'Usuário não encontrado.')
                 
 # Função para salvar usuários no formato "json".
-    def __salvarUsuarios(self):
+    def __salvar_usuarios(self):
         with open('usuarios.json', 'w', encoding='utf-8') as arquivo:
-            json.dump([p.to_dict() for p in self.__listaUsuarios], arquivo, ensure_ascii=False, indent=2)
+            json.dump([p.to_dict() for p in self.__lista_usuarios], arquivo, ensure_ascii=False, indent=2)
 
 # Função para carregar usuários no formato "json". 
-    def __carregarUsuarios(self):
+    def __carregar_usuarios(self):
         if os.path.exists('usuarios.json'):
             with open('usuarios.json', 'r', encoding='utf-8') as arquivo:
                 dados = json.load(arquivo)
-                self.__listaUsuarios = [Pessoa.from_dict(p) for p in dados]
+                self.__lista_usuarios = [Pessoa.from_dict(p) for p in dados]
 
 # Execução do looping.
     def executar(self):
@@ -114,13 +114,13 @@ Menu:\n
                   ''')
             user = input('\nDigite a opção desejada: ')
             if user == '1':
-                self.cadastrarUsuarios()
+                self.cadastrar_usuarios()
             elif user == '2':
-                self.listarUsuarios()
+                self.listar_usuarios()
             elif user == '3':
-                self.buscarUsuarios()
+                self.buscar_usuarios()
             elif user == '4':
-                self.removerUsuario()
+                self.remover_usuario()
             elif user == '5':
                 break
             else:

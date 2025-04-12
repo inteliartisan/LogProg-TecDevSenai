@@ -1,8 +1,9 @@
-# Atividade 02
+# Atividade 05
 
-# 1 - Ao iniciar a execução do algoritmo, solicitar quantas pessoas serão cadastradas. 
-# 2 - Ao escolher a opção 1, para cadastrar um novo usuário, sempre verificar se a estrutura homogênea possui alguma posição disponível para armazenar o novo usuário.
-# 2.1 - Ainda na posição 1, após digitar os dados do usuário, adicioná-lo sempre a próxima posição disponível.
+# Promover a melhoria do código a partir do conceito de pilha (FILO).
+# 1 - A estrutura deverá ter 20 posições
+# 2 - O elemento adicionado deverá estar no topo da pilha. 
+# 3 - Implementa a ação de remover o último elemento da pilha. 
 
 import json
 import os
@@ -45,13 +46,13 @@ class Usuarios:
 
 # Função para cadastrar usuário já com os tratamentos devidos e a melhoria da atividade de haver uma limitação no número de usuários cadastrados. 
     def cadastrar_usuarios(self):
-        maxUsuarios = 3
+        maxUsuarios = 20
         if len(self.__lista_usuarios) < maxUsuarios:
             nome = input('\nDigite o nome do usuário: ')
             idade = input('Digite a idade do usuário: ')
             try:
                 pessoa = Pessoa(nome, idade)
-                self.__lista_usuarios.append(pessoa)
+                self.__lista_usuarios.insert(0, pessoa)
                 print('\nUsuário cadastrado com sucesso!')
                 self.__salvar_usuarios()
             except ValueError as e:
@@ -67,7 +68,36 @@ class Usuarios:
             print('\nOs usuários cadastrados são:\n')
             for i in self.__lista_usuarios:
                 print(i)
+    
+# Função para buscar um usuário pelo nome evidenciando a posição, o nome e a idade e caso não encontrado, emitindo a mensagem "usuário não registrado".
+    def buscar_usuarios(self):
+        usuario = False
+        buscaUsuario = input('\nDigite o nome do usuário que deseja buscar: ')
+        for i, pessoa in enumerate(self.__lista_usuarios):
+            if pessoa.nome == buscaUsuario:
+                print(f'Posição: {1 + i}, Nome: {pessoa.nome}, Idade: {pessoa.idade}')
+            usuario = True
+            if not usuario:
+                print('\nUsuário não registrado')
 
+# Função para remover um usuário pelo nome da pessoa da estrutura homogênea.
+    def remover_usuario(self):
+        removeUsuario = input('\nInforme o nome do usuário que deseja remover: ')
+        for i, pessoa in enumerate(self.__lista_usuarios):
+            if pessoa.nome == removeUsuario:
+                self.__lista_usuarios.pop(i)
+                print(f'{removeUsuario} foi removido com sucesso!')
+                self.__salvar_usuarios() #atualiza o arquivo "json".
+                break
+            else:
+                print(f'Usuário não encontrado.')
+
+# Função para remover o último usuário da pilha.
+    def remover_usuario_pilha(self):
+        usuarioRemovido = self.__lista_usuarios.pop()
+        print(f'{usuarioRemovido.nome} foi removido com sucesso!')
+        self.__salvar_usuarios() #atualiza o arquivo "json".
+                
 # Função para salvar usuários no formato "json".
     def __salvar_usuarios(self):
         with open('usuarios.json', 'w', encoding='utf-8') as arquivo:
@@ -84,10 +114,13 @@ class Usuarios:
     def executar(self):
         while True:
             print('''
-\nMenu:\n
+Menu:\n
 1. Para cadastrar usuário
-2. Para listar os usuários
-3. Para sair do sistema
+2. Para listar os usuários cadastrados
+3. Para buscar um usuário pelo nome
+4. Para remover um usuário pelo nome
+5. Para remover o último usuário na lista de cadastro
+6. Para sair do sistema
                   ''')
             user = input('\nDigite a opção desejada: ')
             if user == '1':
@@ -95,10 +128,16 @@ class Usuarios:
             elif user == '2':
                 self.listar_usuarios()
             elif user == '3':
+                self.buscar_usuarios()
+            elif user == '4':
+                self.remover_usuario()
+            elif user == '5':
+                self.remover_usuario_pilha()
+            elif user == '6':
                 break
             else:
                 print('\nOpção Inválida')
 
 if __name__ == "__main__":
     app = Usuarios()
-    app.executar()
+    app.executar() 

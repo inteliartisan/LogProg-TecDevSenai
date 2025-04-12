@@ -1,4 +1,3 @@
-
 # Atividade 01:
 
 # 1 - Implementar uma repetição que solicite as informações do usuário até que seja informado a opção "c".
@@ -46,41 +45,41 @@ class Pessoa:
     
 class Usuarios: 
     def __init__(self):
-        self.__listaUsuarios = []
-        self.__carregarUsuarios()
+        self.__lista_usuarios = []
+        self.__carregar_usuarios()
 
 # Função para cadastrar usuário já com os tratamentos devidos.
-    def cadastrarUsuarios(self):
+    def cadastrar_usuarios(self):
         nome = input('\nDigite o nome do usuário: ')
         idade = input('Digite a idade do usuário: ')
         try:
             pessoa = Pessoa(nome, idade)
-            self.__listaUsuarios.append(pessoa)
+            self.__lista_usuarios.append(pessoa)
             print('\nUsuário cadastrado com sucesso!')
-            self.__salvarUsuarios()
+            self.__salvar_usuarios()
         except ValueError as e:
             print(f'Erro ao cadastrar: {e}')
 
 # Função para listar usuários.
-    def listarUsuarios(self):
-        if not self.__listaUsuarios:
+    def listar_usuarios(self):
+        if not self.__lista_usuarios:
             print(f'\nNão há usuários cadastrados')
         else:
             print('\nOs usuários cadastrados são:\n')
-            for i in self.__listaUsuarios:
+            for i in self.__lista_usuarios:
                 print(i)
 
 # Função para salvar usuários no formato "json".
-    def __salvarUsuarios(self):
+    def __salvar_usuarios(self):
         with open('usuarios.json', 'w', encoding='utf-8') as arquivo:
-            json.dump([p.to_dict() for p in self.__listaUsuarios], arquivo, ensure_ascii=False, indent=2)
+            json.dump([p.to_dict() for p in self.__lista_usuarios], arquivo, ensure_ascii=False, indent=2)
 
 # Função para carregar usuários no formato "json". 
-    def __carregarUsuarios(self):
+    def __carregar_usuarios(self):
         if os.path.exists('usuarios.json'):
             with open('usuarios.json', 'r', encoding='utf-8') as arquivo:
                 dados = json.load(arquivo)
-                self.__listaUsuarios = [Pessoa.from_dict(p) for p in dados]
+                self.__lista_usuarios = [Pessoa.from_dict(p) for p in dados]
 
 # Execução do código
     def executar(self):
@@ -89,17 +88,14 @@ class Usuarios:
 \nMenu:\n
 1. Para cadastrar usuário
 2. Para listar os usuários
-3. Para buscar um usuário pelo nome
-4. Para sair do sistema
+3. Para sair do sistema
                   ''')
             user = input('\nDigite a opção desejada: ')
             if user == '1':
-                self.cadastrarUsuarios()
+                self.cadastrar_usuarios()
             elif user == '2':
-                self.listarUsuarios()
+                self.listar_usuarios()
             elif user == '3':
-                self.buscarUsuarios()
-            elif user == '4':
                 break
             else:
                 print('\nOpção Inválida')
