@@ -1,10 +1,8 @@
-# Atividade 05
+# Atividade 06
 
-# Promover a melhoria do código a partir do conceito de pilha (FILO).
-# 1 - A estrutura deverá ter 20 posições
-# 2 - O elemento adicionado deverá estar no topo da pilha. 
-# 3 - Implementa a ação de remover o último elemento da pilha. 
-# 4 - Implementa a ação de limpar (remover todos os elementos da pilha)
+# Promover a melhoria do código a partir do conceito de fila (FIFO).
+# 1 - A estrutura deverá ter 25 posições. 
+# 2 - O elemento adicionado deverá estar no final da fila. 
 
 import json
 import os
@@ -47,13 +45,13 @@ class Usuarios:
 
 # Função para cadastrar usuário já com os tratamentos devidos e a melhoria da atividade de haver uma limitação no número de usuários cadastrados. 
     def cadastrar_usuarios(self):
-        maxUsuarios = 20
+        maxUsuarios = 25
         if len(self.__lista_usuarios) < maxUsuarios:
             nome = input('\nDigite o nome do usuário: ')
             idade = input('Digite a idade do usuário: ')
             try:
                 pessoa = Pessoa(nome, idade)
-                self.__lista_usuarios.insert(0, pessoa)
+                self.__lista_usuarios.append(pessoa)
                 print('\nUsuário cadastrado com sucesso!')
                 self.__salvar_usuarios()
             except ValueError as e:
@@ -151,4 +149,3 @@ Menu:\n
 if __name__ == "__main__":
     app = Usuarios()
     app.executar() 
-
