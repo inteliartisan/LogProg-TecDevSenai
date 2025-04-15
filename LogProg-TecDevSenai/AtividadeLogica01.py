@@ -1,4 +1,4 @@
-# Atividade 01:
+# Atividade 01
 
 # 1 - Implementar uma repetição que solicite as informações do usuário até que seja informado a opção "c".
 # 2 - A cada repetição, apresentar o menu com as seguintes opções:
