@@ -1,6 +1,6 @@
 # Atividade 07
 
-# Utilizar a ideia de BubbleSort, para ordenar por idade de forma crescente a lista de usuários. 
+# Utilizar a ideia de MergeSort, para ordenar por idade de forma crescente a lista de usuários. 
 # 1 - Implementar um função que receba a lista de usuários e ordene por idade de forma crescente.
 # 2 - Implementar no menu a opção de ordenar por idade de forma crescente a lista de usuários. 
 
@@ -105,12 +105,30 @@ class Usuarios:
 
 # Função para ordernar por idade a lista de usuários:
     def ordenar_por_idade(self):
-        soma_lista_usuarios = len(self.__lista_usuarios)
-        for i in range(soma_lista_usuarios):
-            for j in range(0, soma_lista_usuarios - i - 1):
-                if self.__lista_usuarios[j].idade > self.__lista_usuarios[j + 1].idade:
-                    self.__lista_usuarios[j], self.__lista_usuarios[j + 1] = self.__lista_usuarios[j +1], self.__lista_usuarios[j]
-        print('\nUsuários ordenados por idade crescente com sucesso!')
+        def merge_sort(lista):
+            if len(lista) <=1:
+                return lista
+            meio = len(lista) // 2
+            esquerda = merge_sort(lista[:meio])
+            direita = merge_sort(lista[meio:])
+            return merge(esquerda, direita)
+        
+        def merge(esquerda, direita):
+            resultado = []
+            i = j = 0
+            while i < len(esquerda) and j < len(direita):
+                if esquerda[i].idade <= direita[j].idade:
+                    resultado.append(esquerda[i])
+                    i += 1
+                else:
+                    resultado.append(direita[j])
+                    j += 1
+            resultado.extend(esquerda[i:])
+            resultado.extend(direita[j:])
+            return resultado
+        
+        self.__lista_usuarios = merge_sort(self.__lista_usuarios)
+        print('\nUsuários ordenados por idade de forma crescente com sucesso!')
         self.__salvar_usuarios()
 
 # Função para salvar usuários no formato "json".
