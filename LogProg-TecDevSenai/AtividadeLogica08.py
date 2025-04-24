@@ -1,4 +1,4 @@
-# Atividade 07
+# Atividade 08
 
 # Utilizar a ideia de MergeSort, para ordenar por idade de forma crescente a lista de usuários. 
 # 1 - Implementar um função que receba a lista de usuários e ordene por idade de forma crescente.
@@ -70,26 +70,25 @@ class Usuarios:
     
 # Função para buscar um usuário pelo nome evidenciando a posição, o nome e a idade e caso não encontrado, emitindo a mensagem "usuário não registrado".
     def buscar_usuarios(self):
+        buscaUsuario = input('\nDigite o nome do usuário que deseja buscar: ').strip()
         usuario = False
-        buscaUsuario = input('\nDigite o nome do usuário que deseja buscar: ')
         for i, pessoa in enumerate(self.__lista_usuarios):
-            if pessoa.nome == buscaUsuario:
+            if pessoa.nome.lower() == buscaUsuario.lower():
                 print(f'Posição: {1 + i}, Nome: {pessoa.nome}, Idade: {pessoa.idade}')
-            usuario = True
-            if not usuario:
-                print('\nUsuário não registrado')
+                usuario = True
+        if not usuario:
+            print('\nUsuário não registrado')
 
 # Função para remover um usuário pelo nome da pessoa da estrutura homogênea.
     def remover_usuario(self):
-        removeUsuario = input('\nInforme o nome do usuário que deseja remover: ')
+        removeUsuario = input('\nInforme o nome do usuário que deseja remover: ').strip()
         for i, pessoa in enumerate(self.__lista_usuarios):
-            if pessoa.nome == removeUsuario:
+            if pessoa.nome.lower() == removeUsuario.lower():
                 self.__lista_usuarios.pop(i)
                 print(f'{removeUsuario} foi removido com sucesso!')
                 self.__salvar_usuarios() #atualiza o arquivo "json".
-                break
-            else:
-                print(f'Usuário não encontrado.')
+                return
+        print(f'Usuário não encontrado.')
 
 # Função para remover o último usuário da pilha.
     def remover_usuario_pilha(self):
